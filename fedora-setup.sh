@@ -82,7 +82,7 @@ FLATPAK_LIST=(
 for flatpak_name in ${FLATPAK_LIST[@]}; do
     echo "Installing $flatpak_name..."
     sleep 2
-    sudo dnf install -y "$flatpak_name"
+    sudo flatpak install -y "$flatpak_name"
 done
 
 echo "Fedora post-installation script has been successfully executed."
