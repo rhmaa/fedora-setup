@@ -80,14 +80,9 @@ FLATPAK_LIST=(
 )
 
 for flatpak_name in ${FLATPAK_LIST[@]}; do
-    if ! sudo dnf list --installed | grep -q "^\<$flatpak_name\>"; then
-        echo "Installing $flatpak_name..."
-        sleep 2
-        sudo dnf install -y "$flatpak_name"
-        echo "$fkatpak_name installed."
-    else
-        echo "$flatpak_name is already installed."
-    fi
+    echo "Installing $flatpak_name..."
+    sleep 2
+    sudo dnf install -y "$flatpak_name"
 done
 
 echo "Fedora post-installation script has been successfully executed."
