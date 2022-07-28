@@ -6,18 +6,18 @@ sleep 10
 
 echo "Removing superflous software..."
 sudo dnf -y remove gnome-shell-extension-background-logo totem cheese gnome-maps
-sudo dnf autoremove -y
+sudo dnf -y autoremove
 
 echo "Enabling third-party repositories..."
-sudo dnf install -y \
+sudo dnf -y install \
   https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
-sudo dnf install -y \
+sudo dnf -y install \
   https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
-sudo dnf upgrade --refresh
+sudo dnf -y upgrade --refresh
 
 echo "Installing multimedia codecs..."
-sudo dnf groupupdate -y multimedia --setop="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin
+sudo dnf -y groupupdate multimedia --setop="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin
 
 PACKAGE_LIST=(
     nvidia-driver
@@ -27,11 +27,10 @@ PACKAGE_LIST=(
     git
     golang
     gnome-tweaks
+    bottles
     steam
     vlc
     wget
-    wine
-    winetricks
 )
 
 for package_name in ${PACKAGE_LIST[@]}; do
@@ -60,7 +59,7 @@ fi
 
 if ! sudo dnf list --installed | grep -q git; then
     echo "Setting up Emacs..."
-    git https://github.com/hevosmaa/emacs.d.git ~/.config/emacs
+    git clone https://github.com/hevosmaa/emacs.d.git ~/.config/emacs
     echo "alias em = emacs -nw" >> ~/.profile
 fi
 
