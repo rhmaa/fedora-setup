@@ -4,7 +4,7 @@ echo "Fedora post-installation script is running..."
 
 echo "Removing superflous software..."
 sleep 1
-sudo dnf -y remove gnome-shell-extension-background-logo totem cheese gnome-maps firefox
+sudo dnf -y remove gnome-shell-extension-background-logo totem cheese gnome-maps
 sudo dnf -y autoremove
 
 echo "Enabling third-party repositories..."
@@ -22,8 +22,7 @@ sudo dnf -y groupupdate multimedia --setop="install_weak_deps=False" --exclude=P
 
 PACKAGE_LIST=(
     emacs
-    gnome-extensions-app
-    gnome-tweaks
+    g++
     golang
     nvidia-driver
     steam
@@ -40,14 +39,6 @@ for package_name in ${PACKAGE_LIST[@]}; do
         echo "$package_name is already installed."
     fi
 done
-
-echo "Installing Microsoft Edge..."
-sleep 1
-sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-sudo dnf config-manager --add-repo https://packages.microsoft.com/yumrepos/edge
-sudo dnf config-manager --setopt=packages.microsoft.com_yumrepos_edge.name="Microsoft Edge for Fedora" --save
-sudo dnf update --refresh
-sudo dnf -y install microsoft-edge-stable
 
 echo "Setting up git..."
 sleep 1
@@ -68,8 +59,8 @@ echo "alias em=\"emacs -nw\"" >> ~/.bashrc
 
 echo "Enabling flathub..."
 sleep 1
-sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-sudo flatpak remote-modify --enable flathub
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak remote-modify --enable flathub
 
 FLATPAK_LIST=(
     flathub com.spotify.Client
@@ -81,10 +72,26 @@ FLATPAK_LIST=(
 for flatpak_name in ${FLATPAK_LIST[@]}; do
     echo "Installing $flatpak_name..."
     sleep 1
-    sudo flatpak install -y "$flatpak_name"
+    flatpak install -y "$flatpak_name"
 done
 
+echo "Fixing the plymouth boot screen..."
+sudo plymouth-set-default-theme text -R
+
+echo "Fixing Gnome..."
+gsettings set org.gtk.Settings.FileChooser sort-directories-first true
+gsettings set org.gtk.Settings.FileChooser show-type-column true
+gsettings set org.gnome.nautilus.list-view use-tree-view true
+gsettings set org.gnome.nautilus.list-view default-zoom-level 'small'
+
+gsettings set org.gnome.desktop.interface monospace-font-name 'Source Code Pro 12'
+gsettings set org.gnome.desktop.interface font-antialiasing 'rgba'
+
+gsettings set org.gnome.desktop.wm.preferences action-middle-click-titlebar 'minimize'
+gsettings set org.gnome.desktop.wm.preferences theme 'prefer-dark'
+gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
+
 echo "Fedora post-installation script has been successfully executed."
-echo "Please reboot the system."
+echo "Please reboot the system for all changes to take effect."
 
 sleep 5
