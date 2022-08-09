@@ -22,7 +22,6 @@ sudo dnf -y groupupdate multimedia --setop="install_weak_deps=False" --exclude=P
 
 PACKAGE_LIST=(
     emacs
-    g++
     golang
     nvidia-driver
     steam
@@ -75,8 +74,10 @@ for flatpak_name in ${FLATPAK_LIST[@]}; do
     flatpak install -y "$flatpak_name"
 done
 
+flatpak update -y
+
 echo "Fixing the plymouth boot screen..."
-sudo plymouth-set-default-theme text -R
+sudo plymouth-set-default-theme details -R
 
 echo "Fixing Gnome..."
 gsettings set org.gtk.Settings.FileChooser sort-directories-first true
@@ -90,6 +91,8 @@ gsettings set org.gnome.desktop.interface font-antialiasing 'rgba'
 gsettings set org.gnome.desktop.wm.preferences action-middle-click-titlebar 'minimize'
 gsettings set org.gnome.desktop.wm.preferences theme 'prefer-dark'
 gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
+
+gsettings set org.gnome.desktop.calendar show-weekdate true
 
 echo "Fedora post-installation script has been successfully executed."
 echo "Please reboot the system for all changes to take effect."
