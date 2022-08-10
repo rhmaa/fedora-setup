@@ -4,7 +4,7 @@ echo "Fedora post-installation script is running..."
 
 echo "Removing superflous software..."
 sleep 1
-sudo dnf -y remove gnome-shell-extension-background-logo totem cheese gnome-maps
+sudo dnf -y remove gnome-shell-extension-background-logo totem cheese gnome-maps rhythmbox
 sudo dnf -y autoremove
 
 echo "Enabling third-party repositories..."
@@ -93,6 +93,13 @@ gsettings set org.gnome.desktop.wm.preferences theme 'prefer-dark'
 gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
 
 gsettings set org.gnome.desktop.calendar show-weekdate true
+
+gsettings set org.gnome.TextEditor highlight-current-line true
+gsettings set org.gnome.TextEditor show-map true
+gsettings set org.gnome.TextEditor show-line-numbers true
+gsettings set org.gnome.TextEditor show-right-margin true
+gsettings set org.gnome.TextEditor tab-width 'uint32 4'
+gsettings set org.gnome.TextEditor indent-style 'space'
 
 echo "Fedora post-installation script has been successfully executed."
 echo "Please reboot the system for all changes to take effect."
