@@ -22,7 +22,6 @@ sudo dnf -y groupupdate multimedia --setop="install_weak_deps=False" --exclude=P
 
 PACKAGE_LIST=(
     emacs
-    golang
     nvidia-driver
     steam
     vlc
@@ -44,12 +43,6 @@ sleep 1
 git config --global user.name "Rikard Hevosmaa"
 git config --global user.email "rikard@hevosmaa.net"
 git config --global core.editor "emacs -Q -nw"
-
-echo "Setting up a Go programming workspace..."
-sleep 1
-mkdir -p $HOME/Code/go/{bin,pkg,src}
-echo GOPATH=$HOME/Code/go >> ~/.bashrc
-echo PATH=$PATH:$GOPATH/bin >> ~/.bashrc
 
 echo "Setting up Emacs..."
 sleep 1
