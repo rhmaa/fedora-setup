@@ -1,14 +1,12 @@
 #!/bin/bash
 
-echo "Fedora post-installation script is running..."
+printf "Fedora post-installation script is running..."
 
-echo "Removing superflous software..."
-sleep 1
-sudo dnf -y remove gnome-shell-extension-background-logo totem cheese gnome-maps rhythmbox
+printf "Removing superflous software..."
+sudo dnf -y remove gnome-shell-extension-background-logo totem cheese gnome-maps rhythmbox libre-office-*
 sudo dnf -y autoremove
 
-echo "Enabling third-party repositories..."
-sleep 1
+printf "Enabling third-party repositories..."
 sudo dnf -y install \
   https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
 sudo dnf -y install \
@@ -16,8 +14,7 @@ sudo dnf -y install \
 
 sudo dnf -y upgrade --refresh
 
-echo "Installing multimedia codecs..."
-sleep 1
+printf "Installing multimedia codecs..."
 sudo dnf -y groupupdate multimedia --setop="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin
 
 PACKAGE_LIST=(
@@ -29,28 +26,19 @@ PACKAGE_LIST=(
 
 for package_name in ${PACKAGE_LIST[@]}; do
     if ! sudo dnf list --installed | grep -q "^\<$package_name\>"; then
-        echo "Installing $package_name..."
-        sleep 1
+        printf "Installing $package_name..."
         sudo dnf install -y "$package_name"
-        echo "$package_name installed."
+        printf "$package_name installed."
     else
-        echo "$package_name is already installed."
+        printf "$package_name is already installed."
     fi
 done
 
-echo "Setting up git..."
-sleep 1
-git config --global user.name "Rikard Hevosmaa"
-git config --global user.email "rikard@hevosmaa.net"
-git config --global core.editor "emacs -Q -nw"
+printf "Setting up Emacs..."
+git clone https://github.com/rhmaa/emacs.d.git ~/.config/emacs
+printf "alias em=\"emacs -nw\"" >> ~/.bashrc
 
-echo "Setting up Emacs..."
-sleep 1
-git clone https://github.com/hevosmaa/emacs.d.git ~/.config/emacs
-echo "alias em=\"emacs -nw\"" >> ~/.bashrc
-
-echo "Enabling flathub..."
-sleep 1
+printf "Enabling flathub..."
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpak remote-modify --enable flathub
 
@@ -62,22 +50,17 @@ FLATPAK_LIST=(
 )
 
 for flatpak_name in ${FLATPAK_LIST[@]}; do
-    echo "Installing $flatpak_name..."
+    printf "Installing $flatpak_name..."
     sleep 1
     flatpak install -y "$flatpak_name"
 done
 
 flatpak update -y
 
-echo "Fixing the plymouth boot screen..."
+printf "Fixing the plymouth boot screen..."
 sudo plymouth-set-default-theme details -R
 
-echo "Fixing Gnome..."
-gsettings set org.gtk.Settings.FileChooser sort-directories-first true
-gsettings set org.gtk.Settings.FileChooser show-type-column true
-gsettings set org.gnome.nautilus.list-view use-tree-view true
-gsettings set org.gnome.nautilus.list-view default-zoom-level 'small'
-
+printf "Fixing Gnome..."
 gsettings set org.gnome.desktop.interface monospace-font-name 'Source Code Pro 12'
 gsettings set org.gnome.desktop.interface font-antialiasing 'rgba'
 
@@ -87,14 +70,4 @@ gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
 
 gsettings set org.gnome.desktop.calendar show-weekdate true
 
-gsettings set org.gnome.TextEditor highlight-current-line true
-gsettings set org.gnome.TextEditor show-map true
-gsettings set org.gnome.TextEditor show-line-numbers true
-gsettings set org.gnome.TextEditor show-right-margin true
-gsettings set org.gnome.TextEditor tab-width 'uint32 4'
-gsettings set org.gnome.TextEditor indent-style 'space'
-
-echo "Fedora post-installation script has been successfully executed."
-echo "Please reboot the system for all changes to take effect."
-
-sleep 5
+printf "Script done. Reboot the system for all changes to take effect."
