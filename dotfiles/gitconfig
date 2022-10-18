@@ -1,0 +1,5 @@
+[user]
+	name = Rikard Hevosmaa
+	email = rikard@hevosmaa.net
+[core]
+	editor = emacs -nw

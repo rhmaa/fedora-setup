@@ -1,0 +1,6 @@
+*~
+dotfiles/emacs/auto-save-list/
+dotfiles/emacs/elpa/
+dotfiles/emacs/eln-cache/
+dotfiles/emacs/transient/
+dotfiles/emacs/bookmarks
