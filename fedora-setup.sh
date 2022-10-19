@@ -14,8 +14,8 @@ sudo dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-r
 sudo dnf -y install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
 # enable flatpak
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-
+sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+sudo flatpak remote-modify --enable flathub
 
 # ========================================================================
 # 	Install and remove packages
@@ -53,13 +53,13 @@ for package_name in ${PACKAGE_LIST[@]}; do
     if ! sudo dnf list --installed | grep -q "^\<$package_name\>"; then
         sudo dnf install -y "$package_name"
     else
-        printf "$package_name is already installed."
+        printf "$package_name is already installed.\n"
     fi
 done
 
 # install flatpaks
 for flatpak_name in ${FLATPAK_LIST[@]}; do
-    printf "Installing $flatpak_name..."
+    printf "Installing $flatpak_name...\n"
     sleep 1
     flatpak install -y "$flatpak_name"
 done
@@ -103,9 +103,9 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/or
 make clean
 make copy
 
-printf "************************************************************************"
-printf "                    Script executed successfully.                       "
-printf "      Please reboot your computer for everything to take effect.        "
-printf "************************************************************************"
+printf "************************************************************************\n"
+printf "                    Script executed successfully.                       \n"
+printf "      Please reboot your computer for everything to take effect.        \n"
+printf "************************************************************************\n"
 
 sleep 5
