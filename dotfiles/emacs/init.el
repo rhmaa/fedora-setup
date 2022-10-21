@@ -9,10 +9,13 @@
     (global-font-lock-mode 0))
 
 ;; Fix the looks.
-(load-theme 'badwolf t)
+(load-theme 'modus-operandi t)
 (set-face-attribute 'mode-line nil :box nil)
 (set-face-attribute 'mode-line-inactive nil :box nil)
 (set-face-attribute 'fringe nil :background nil)
+(set-face-attribute 'line-number nil :background nil)
+(set-face-attribute 'line-number-current-line nil :inherit 'hl-line :background)
+(set-face-attribute 'font-lock-comment-face nil :italic t)
 (global-hl-line-mode t)
 
 ;; Fix the cursor.
