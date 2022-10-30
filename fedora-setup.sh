@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-# ========================================================================
-# 	Setup repositories
-# ========================================================================
+#
+# Repositories.
+#
 
 # speed up dnf
 sudo echo "fastestmirror=True" >> /etc/dnf/dnf.conf
@@ -17,12 +17,13 @@ sudo dnf -y install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-non
 sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 sudo flatpak remote-modify --enable flathub
 
-# ========================================================================
-# 	Install and remove packages
-# ========================================================================
+
+#
+# Packages.
+#
 
 # remove unnecessary packages
-sudo dnf -y remove gnome-shell-extension-background-logo totem cheese gnome-maps rhythmbox libre-office-*
+sudo dnf -y remove gnome-shell-extension-background-logo gnome-tour totem cheese mediawriter gnome-maps rhythmbox libre-office-*
 sudo dnf -y autoremove
 
 # update system packages
@@ -33,12 +34,12 @@ sudo dnf -y groupupdate multimedia --setop="install_weak_deps=False" --exclude=P
 
 PACKAGE_LIST=(
     emacs
+    gnome-backgrounds-extras
     nvidia-driver
     nvidia-vaapi-driver
     steam
     transmission
     vlc
-    zile
 )
 
 FLATPAK_LIST=(
@@ -67,26 +68,44 @@ done
 flatpak update -y
 
 
-# ========================================================================
-# 	Gnome settings
-# ========================================================================
+#
+# Make gtk3 applications look like gtk4 applications.
+#
+
+wget https://github.com/lassekongo83/adw-gtk3/releases/download/v4.0/adw-gtk3v4-0.tar.xz
+tar -xf adw-gtk3v4-0.tar.xz
+mv adw-gtk3 $HOME/.local/share/themes
+mv adw-gtk3-dark $HOME/.local/share/themes
+rm -rf adw-gtk3v4-0.tar.xz
+
+
+#
+# Gnome settings.
+#
 
 gsettings set org.gnome.desktop.interface monospace-font-name 'Source Code Pro 12'
 gsettings set org.gnome.desktop.interface font-antialiasing 'rgba'
 
 gsettings set org.gnome.desktop.wm.preferences action-middle-click-titlebar 'minimize'
 gsettings set org.gnome.desktop.wm.preferences theme 'prefer-dark'
-gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
+gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark'
 
 gsettings set org.gnome.desktop.calendar show-weekdate true
 
+dconf write /org/gnome/software/allow-updates false
+dconf write /org/gnome/software/download-updates false
 
-# ========================================================================
-# 	Keybindings
-# ========================================================================
+sudo systemctl disable packagekit.service
+sudo systemctl mask packagekit.service
+sudo systemctl disable packagekit-offline-update.service
+sudo systemctl mask packagekit-offline-update.service
+
+
+#
+# Keybindings.
+#
 
 gsettings set org.gnome.desktop.wm.keybindings switch-windows "['<Alt>Tab']"
-gsettings set org.gnome.desktop.wm.keybindings close "['<Control>q']"
 gsettings set org.gnome.settings-daemon.plugins.media-keys home "['<Super>e']"
 
 gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
@@ -96,9 +115,9 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/or
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name "Launch terminal"
 
 
-# ========================================================================
-# 	Dotfiles
-# ========================================================================
+#
+# Dotfiles.
+#
 
 make clean
 make copy

@@ -1,12 +1,7 @@
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(setq user-emacs-directory "~/.config/emacs/")
 (setq custom-file (concat user-emacs-directory "lisp/custom.el"))
 (load custom-file)
-
-;; Don't show fancy colours in terminals.
-(if (not (display-graphic-p))
-    (global-font-lock-mode 0))
 
 ;; Fix the looks.
 (load-theme 'modus-operandi t)
@@ -44,21 +39,12 @@
 (add-hook 'c-mode-hook 'whitepace-mode)
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
-;; Enable Magit.
-(require 'magit)
-
 ;; Enable essential keybinds.
 (global-set-key (kbd "C-x C-b") 'buffer-menu)
 (global-set-key (kbd "C-c C-f") 'find-file-at-point)
 (global-set-key (kbd "C-c C-c") 'comment-region)
 (global-set-key (kbd "C-c C-v") 'uncomment-region)
 (global-set-key (kbd "C-c C-j") 'replace-string)
-
-(global-set-key (kbd "C-c g") 'magit-file-dispatch)
-(global-set-key (kbd "C-c d") 'magit-diff-buffer-file)
-(global-set-key (kbd "C-c s") 'magit-status)
-(global-set-key (kbd "C-c p") 'magit-push)
-(global-set-key (kbd "C-c c") 'magit-commit)
 
 ;; Enable shorter answers.
 (fset 'yes-or-no-p 'y-or-n-p)
