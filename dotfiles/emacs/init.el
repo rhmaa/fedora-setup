@@ -11,6 +11,7 @@
 (set-face-attribute 'line-number nil :background nil)
 (set-face-attribute 'line-number-current-line nil :inherit 'hl-line :background)
 (set-face-attribute 'font-lock-comment-face nil :italic t)
+
 (global-hl-line-mode t)
 
 ;; Fix the cursor.
@@ -31,13 +32,14 @@
       `((".*" ,temporary-file-directory t)))
 
 ;; Don't use GNU-style indentation.
-(setq-default c-default-style "k&r"
-	      c-basic-offset 4
+(setq-default c-default-style "bsd"
+	      c-basic-offset 8
+              tab-width 8
 	      indent-tabs-mode nil)
 
 ;; Programming mode hooks.
-(add-hook 'c-mode-hook 'whitepace-mode)
-(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+(if (display-graphic-p)
+    (add-hook 'prog-mode-hook 'display-line-numbers-mode))
 
 ;; Enable essential keybinds.
 (global-set-key (kbd "C-x C-b") 'buffer-menu)
@@ -51,3 +53,6 @@
 
 ;; Enable region overwrite.
 (delete-selection-mode t)
+
+;; Show column number in the modeline.
+(column-number-mode t)

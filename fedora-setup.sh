@@ -4,11 +4,6 @@
 # Repositories.
 #
 
-# speed up dnf
-sudo echo "fastestmirror=True" >> /etc/dnf/dnf.conf
-sudo echo "max_parallel_downloads=10" >> /etc/dnf/dnf.conf
-sudo echo "keepcache=True" >> /etc/dnf/dnf.conf
-
 # enable rpmfusion
 sudo dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
 sudo dnf -y install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
@@ -23,7 +18,7 @@ sudo flatpak remote-modify --enable flathub
 #
 
 # remove unnecessary packages
-sudo dnf -y remove gnome-shell-extension-background-logo gnome-tour totem cheese mediawriter gnome-maps rhythmbox libre-office-*
+sudo dnf -y remove gnome-shell-extension-background-logo gnome-tour totem cheese gnome-maps rhythmbox libre-office-*
 sudo dnf -y autoremove
 
 # update system packages
@@ -33,8 +28,7 @@ sudo dnf -y upgrade --refresh
 sudo dnf -y groupupdate multimedia --setop="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin
 
 PACKAGE_LIST=(
-    emacs
-    gnome-backgrounds-extras
+    emacs-nox
     nvidia-driver
     nvidia-vaapi-driver
     steam
@@ -72,11 +66,11 @@ flatpak update -y
 # Make gtk3 applications look like gtk4 applications.
 #
 
-wget https://github.com/lassekongo83/adw-gtk3/releases/download/v4.0/adw-gtk3v4-0.tar.xz
-tar -xf adw-gtk3v4-0.tar.xz
-mv adw-gtk3 $HOME/.local/share/themes
-mv adw-gtk3-dark $HOME/.local/share/themes
-rm -rf adw-gtk3v4-0.tar.xz
+wget https://github.com/lassekongo83/adw-gtk3/releases/download/v4.1/adw-gtk3v4-1.tar.xz
+tar -xf adw-gtk*.tar.xz
+mv adw-gtk3 $HOME/.local/share/themes/
+mv adw-gtk3-dark $HOME/.local/share/themes/
+rm -rf adw-gtk*.tar.xz
 
 
 #
