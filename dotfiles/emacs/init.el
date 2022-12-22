@@ -11,6 +11,8 @@
 (set-face-attribute 'line-number nil :background nil)
 (set-face-attribute 'line-number-current-line nil :inherit 'hl-line :background)
 (set-face-attribute 'font-lock-comment-face nil :italic t)
+(set-face-attribute 'highlight nil :background "#303030")
+(set-face-attribute 'region nil :background "#404040")
 
 (global-hl-line-mode t)
 

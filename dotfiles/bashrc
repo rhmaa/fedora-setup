@@ -18,14 +18,17 @@ export PATH
 #
 # User specific aliases and functions
 #
-alias em='emacs'
+alias em='emacs -nw'
 alias ls='ls -v --group-directories-first --color=auto'
 alias la='ls -a'
 alias ll='ls -l'
 alias top='top -e m -E m'
 alias wget='wget --no-hsts'
 alias sudo='sudo '
+alias installdate="stat / | grep \"Birth\" | sed 's/Birth: //g' | cut -b 2-11"
 
 # Change between dark mode and light mode quickly.
 alias lt="gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3' && gsettings set org.gnome.desktop.interface color-scheme 'default'"
 alias dt="gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark' && gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'"
+
+bind -f .config/inputrc
