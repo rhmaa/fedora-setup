@@ -26,9 +26,9 @@ alias top='top -e m -E m'
 alias wget='wget --no-hsts'
 alias open='xdg-open'
 alias sudo='sudo '
-alias installdate="stat / | grep \"Birth\" | sed 's/Birth: //g' | cut -b 2-11"
+alias birthday="stat / | grep \"Birth\" | sed 's/Birth: //g' | cut -b 2-11"
 
-# Change between dark mode and light mode quickly.
+# Change between dark mode and light mode quickly
 alias lt="gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3' && gsettings set org.gnome.desktop.interface color-scheme 'default'"
 alias dt="gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark' && gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'"
 

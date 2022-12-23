@@ -1,1 +1,2 @@
+# We need this to stop Xterm from beeping at us.
 set bell-style none
