@@ -4,7 +4,7 @@
 (load custom-file)
 
 ;; Fix the looks.
-(load-theme 'modus-operandi t)
+(load-theme 'modus-vivendi t)
 (set-face-attribute 'mode-line nil :box nil)
 (set-face-attribute 'mode-line-inactive nil :box nil)
 (set-face-attribute 'fringe nil :background nil)
@@ -49,6 +49,9 @@
 (global-set-key (kbd "C-c C-c") 'comment-region)
 (global-set-key (kbd "C-c C-v") 'uncomment-region)
 (global-set-key (kbd "C-c C-j") 'replace-string)
+
+;; Allow scrolling with the mouse wheel in XTerm and URxvt.
+(xterm-mouse-mode 1)
 
 ;; Enable shorter answers.
 (fset 'yes-or-no-p 'y-or-n-p)

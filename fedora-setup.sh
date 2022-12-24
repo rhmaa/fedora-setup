@@ -90,11 +90,7 @@ gsettings set org.gnome.desktop.calendar show-weekdate true
 dconf write /org/gnome/software/allow-updates false
 dconf write /org/gnome/software/download-updates false
 
-sudo systemctl disable packagekit.service
-sudo systemctl mask packagekit.service
-sudo systemctl disable packagekit-offline-update.service
-sudo systemctl mask packagekit-offline-update.service
-
+sudo sed -i 's/utilities-terminal/org.gnome.Terminal/g' /usr/share/applications/rxvt-unicode.desktop
 
 #
 # Keybindings.
