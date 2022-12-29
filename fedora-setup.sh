@@ -105,13 +105,14 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/or
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command "urxvt"
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name "Launch terminal"
 
-
 #
-# Dotfiles.
+# OpenVPN
 #
 
-make clean
-make copy
+wget https://www.privateinternetaccess.com/openvpn/openvpn-strong.zip
+unzip openvpn-strong.zip sweden.ovpn
+rm openvpn-strong.zip
+printf "Load ~/sweden.ovpn in the Gnome Control Panel.\n\n"
 
 printf "************************************************************************\n"
 printf "                    Script executed successfully.                       \n"
